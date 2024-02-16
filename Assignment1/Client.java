@@ -168,7 +168,6 @@ public class Client extends Thread {
         int i = 0; /* Index of transaction array */
 
         while (i < getNumberOfTransactions()) {
-
             // Alternatively, busy-wait until the network output buffer is available
             while (objNetwork.getOutBufferStatus().equals("empty")) {
                 Thread.yield();
@@ -209,16 +208,15 @@ public class Client extends Thread {
                 .println("\n DEBUG : Client.run() - starting client " + getClientOperation() + " thread "
                         + objNetwork.getClientConnectionStatus());
 
-        /* Implement here the code for the run method ... */
         switch (getClientOperation()) {
             case "sending":
                 sendClientStartTime = System.currentTimeMillis();
 
                 sendTransactions();
 
-                objNetwork.disconnect(objNetwork.getClientIP());
                 sendClientEndTime = System.currentTimeMillis();
-                System.out.println("\n Terminating client sending application, execution time "
+                System.out.println(Driver.ANSI_RED + "\n Terminating client sending application" + Driver.ANSI_RESET
+                        + ", execution time "
                         + (sendClientEndTime - sendClientStartTime) + " ms");
                 break;
             case "receiving":
@@ -226,10 +224,12 @@ public class Client extends Thread {
 
                 receiveTransactions(transact);
 
-                objNetwork.disconnect(objNetwork.getClientIP());
                 receiveClientEndTime = System.currentTimeMillis();
-                System.out.println("\n Terminating client receiving application, execution time "
-                        + (receiveClientEndTime - receiveClientStartTime) + " ms");
+                System.out
+                        .println(Driver.ANSI_RED + "\n Terminating client receiving application" + Driver.ANSI_RESET
+                                + ", execution time "
+                                + (receiveClientEndTime - receiveClientStartTime) + " ms");
+                objNetwork.disconnect(objNetwork.getClientIP());
                 break;
         }
     }

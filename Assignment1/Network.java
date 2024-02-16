@@ -520,10 +520,6 @@ public class Network extends Thread {
                 + getOutBufferStatus());
     }
 
-    /***********************************************************************************************************************************************
-     * TODO : implement the method Run() to execute the server thread *
-     *********************************************************************************************************************************************/
-
     /**
      * Code for the run method
      * 
@@ -534,9 +530,11 @@ public class Network extends Thread {
         System.out.println("\n DEBUG : Network.run() - starting network thread");
         while (true) {
             if (getClientConnectionStatus() == "disconnected" && getServerConnectionStatus() == "disconnected") {
-                System.out.println(
-                        "\n Terminating network thread - Client " + getClientConnectionStatus() + " Server "
-                                + getServerConnectionStatus());
+                System.out.println(Driver.ANSI_RED +
+                        "\n Terminating network thread" + Driver.ANSI_RESET + " - Client " + getClientConnectionStatus()
+                        + " Server "
+                        + getServerConnectionStatus());
+                // setNetworkStatus("inactive");
                 return;
             }
             Thread.yield();
