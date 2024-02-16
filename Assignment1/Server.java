@@ -209,7 +209,6 @@ public class Server extends Thread {
 
                 // Alternatively, busy-wait until the network output buffer is available
                 while ((objNetwork.getOutBufferStatus().equals("full"))) {
-                    System.out.println("\n OutBuffer");
                     Thread.yield();
                 }
 
