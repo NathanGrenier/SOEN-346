@@ -16,7 +16,7 @@ import java.util.InputMismatchException;
  * @author Kerly Titus
  */
 
-public class Server {
+public class Server extends Thread {
 
     int numberOfTransactions; /* Number of transactions handled by the server */
     int numberOfAccounts; /* Number of accounts stored in the server */
@@ -176,8 +176,10 @@ public class Server {
 
         /* Process the accounts until the client disconnects */
         while ((!objNetwork.getClientConnectionStatus().equals("disconnected"))) {
-            /* while( (objNetwork.getInBufferStatus().equals("empty"))); */
-            /* Alternatively, busy-wait until the network input buffer is available */
+            // Alternatively, busy-wait until the network input buffer is available
+            while ((objNetwork.getInBufferStatus().equals("empty"))) {
+                Thread.yield();
+            }
 
             if (!objNetwork.getInBufferStatus().equals("empty")) {
                 System.out.println("\n DEBUG : Server.processTransactions() - transferring in account "
@@ -214,8 +216,10 @@ public class Server {
                             + trans.getAccountNumber());
                 }
 
-                // while( (objNetwork.getOutBufferStatus().equals("full"))); /* Alternatively,
-                // busy-wait until the network output buffer is available */
+                // Alternatively, busy-wait until the network output buffer is available
+                while ((objNetwork.getOutBufferStatus().equals("full"))) {
+                    Thread.yield();
+                }
 
                 System.out.println("\n DEBUG : Server.processTransactions() - transferring out account "
                         + trans.getAccountNumber());
@@ -287,12 +291,6 @@ public class Server {
                 + objNetwork.getServerConnectionStatus() + "Number of accounts " + getNumberOfAccounts());
     }
 
-    /*
-     * *****************************************************************************
-     * ****************************************************************
-     * TODO : implement the method Run() to execute the server thread *
-     *********************************************************************************************************************************************/
-
     /**
      * Code for the run method
      * 
@@ -305,11 +303,13 @@ public class Server {
 
         System.out
                 .println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
+        serverStartTime = System.currentTimeMillis();
 
-        /* Implement the code for the run method */
+        processTransactions(trans);
 
+        objNetwork.disconnect(objNetwork.getServerIP());
+        serverEndTime = System.currentTimeMillis();
         System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime)
                 + " milliseconds");
-
     }
 }

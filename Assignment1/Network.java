@@ -10,7 +10,7 @@
  *
  * @author Kerly Titus
  */
-public class Network {
+public class Network extends Thread {
 
     private static int maxNbPackets; /* Maximum number of simultaneous transactions handled by the network buffer */
     private static int inputIndexClient, inputIndexServer, outputIndexServer, outputIndexClient; /*
@@ -532,9 +532,14 @@ public class Network {
      */
     public void run() {
         System.out.println("\n DEBUG : Network.run() - starting network thread");
-
         while (true) {
-            /* Implement here the code for the run method ... */
+            if (getClientConnectionStatus() == "disconnected" && getServerConnectionStatus() == "disconnected") {
+                System.out.println(
+                        "\n Terminating network thread - Client " + getClientConnectionStatus() + " Server "
+                                + getServerConnectionStatus());
+                return;
+            }
+            Thread.yield();
         }
     }
 }
