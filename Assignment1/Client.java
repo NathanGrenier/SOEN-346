@@ -149,7 +149,6 @@ public class Client extends Thread {
             objNetwork.send(transaction[i]); /* Transmit current transaction */
             i++;
         }
-
     }
 
     /**
@@ -193,10 +192,11 @@ public class Client extends Thread {
      */
     public void run() {
         Transactions transact = new Transactions();
-        long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
 
         switch (getClientOperation()) {
             case "sending":
+                long sendClientStartTime, sendClientEndTime;
+
                 sendClientStartTime = System.currentTimeMillis();
 
                 sendTransactions();
@@ -207,6 +207,8 @@ public class Client extends Thread {
                         + (sendClientEndTime - sendClientStartTime) + " ms");
                 break;
             case "receiving":
+                long receiveClientStartTime, receiveClientEndTime;
+
                 receiveClientStartTime = System.currentTimeMillis();
 
                 receiveTransactions(transact);
