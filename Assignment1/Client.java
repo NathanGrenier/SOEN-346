@@ -125,9 +125,6 @@ public class Client extends Thread {
         }
         setNumberOfTransactions(i); /* Record the number of transactions processed */
 
-        System.out.println(
-                "\n DEBUG : Client.readTransactions() - " + getNumberOfTransactions() + " transactions processed");
-
         inputStream.close();
 
     }
@@ -149,13 +146,9 @@ public class Client extends Thread {
 
             transaction[i].setTransactionStatus("sent"); /* Set current transaction status */
 
-            System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account "
-                    + transaction[i].getAccountNumber());
-
             objNetwork.send(transaction[i]); /* Transmit current transaction */
             i++;
         }
-
     }
 
     /**
@@ -174,9 +167,6 @@ public class Client extends Thread {
             }
 
             objNetwork.receive(transact); /* Receive updated transaction from the network buffer */
-
-            System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account "
-                    + transact.getAccountNumber());
 
             System.out.println(transact); /* Display updated transaction */
             i++;
@@ -202,14 +192,11 @@ public class Client extends Thread {
      */
     public void run() {
         Transactions transact = new Transactions();
-        long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
-
-        System.out
-                .println("\n DEBUG : Client.run() - starting client " + getClientOperation() + " thread "
-                        + objNetwork.getClientConnectionStatus());
 
         switch (getClientOperation()) {
             case "sending":
+                long sendClientStartTime, sendClientEndTime;
+
                 sendClientStartTime = System.currentTimeMillis();
 
                 sendTransactions();
@@ -220,6 +207,8 @@ public class Client extends Thread {
                         + (sendClientEndTime - sendClientStartTime) + " ms");
                 break;
             case "receiving":
+                long receiveClientStartTime, receiveClientEndTime;
+
                 receiveClientStartTime = System.currentTimeMillis();
 
                 receiveTransactions(transact);
