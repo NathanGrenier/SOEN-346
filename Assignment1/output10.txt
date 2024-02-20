@@ -161,9 +161,9 @@
 
  Account number 12535 Account Balance 750.0 Message done
 
-Terminating client receiving application, execution time 19 ms
+Terminating client receiving application, execution time 21 ms
 
-Terminating client sending application, execution time 18 ms
+Terminating client sending application, execution time 20 ms
 
 Terminating server thread -  Running time 31 milliseconds
 
