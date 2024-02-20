@@ -507,7 +507,8 @@ public class Network extends Thread {
      */
     public void run() {
         while (true) {
-            if (getClientConnectionStatus() == "disconnected" && getServerConnectionStatus() == "disconnected") {
+            if (getClientConnectionStatus().equals("disconnected")
+                    && getServerConnectionStatus().equals("disconnected")) {
                 System.out.println(Driver.ANSI_RED +
                         "\n Terminating network thread" + Driver.ANSI_RESET + " - Client " + getClientConnectionStatus()
                         + " Server "
