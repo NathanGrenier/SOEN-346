@@ -6,8 +6,7 @@ import common.BaseThread;
  *
  * @author Serguei A. Mokhov, mokhov@cs.concordia.ca
  */
-public class Philosopher extends BaseThread
-{
+public class Philosopher extends BaseThread {
 	/**
 	 * Max time an action can take (in milliseconds)
 	 */
@@ -21,16 +20,12 @@ public class Philosopher extends BaseThread
 	 * - yield
 	 * - The print that they are done eating.
 	 */
-	public void eat()
-	{
-		try
-		{
+	public void eat() {
+		try {
 			// ...
-			sleep((long)(Math.random() * TIME_TO_WASTE));
+			sleep((long) (Math.random() * TIME_TO_WASTE));
 			// ...
-		}
-		catch(InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			System.err.println("Philosopher.eat():");
 			DiningPhilosophers.reportException(e);
 			System.exit(1);
@@ -45,8 +40,7 @@ public class Philosopher extends BaseThread
 	 * - yield
 	 * - The print that they are done thinking.
 	 */
-	public void think()
-	{
+	public void think() {
 		// ...
 	}
 
@@ -58,8 +52,7 @@ public class Philosopher extends BaseThread
 	 * - yield
 	 * - The print that they are done talking.
 	 */
-	public void talk()
-	{
+	public void talk() {
 		// ...
 
 		saySomething();
@@ -102,22 +95,18 @@ public class Philosopher extends BaseThread
 	 * Prints out a phrase from the array of phrases at random.
 	 * Feel free to add your own phrases.
 	 */
-	public void saySomething()
-	{
-		String[] astrPhrases =
-		{
-			"Eh, it's not easy to be a philosopher: eat, think, talk, eat...",
-			"You know, true is false and false is true if you think of it",
-			"2 + 2 = 5 for extremely large values of 2...",
-			"If thee cannot speak, thee must be silent",
-			"My number is " + getTID() + ""
+	public void saySomething() {
+		String[] astrPhrases = {
+				"Eh, it's not easy to be a philosopher: eat, think, talk, eat...",
+				"You know, true is false and false is true if you think of it",
+				"2 + 2 = 5 for extremely large values of 2...",
+				"If thee cannot speak, thee must be silent",
+				"My number is " + getTID() + ""
 		};
 
-		System.out.println
-		(
-			"Philosopher " + getTID() + " says: " +
-			astrPhrases[(int)(Math.random() * astrPhrases.length)]
-		);
+		System.out.println(
+				"Philosopher " + getTID() + " says: " +
+						astrPhrases[(int) (Math.random() * astrPhrases.length)]);
 	}
 }
 
