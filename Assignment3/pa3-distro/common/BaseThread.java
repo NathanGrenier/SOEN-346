@@ -179,14 +179,12 @@ public class BaseThread extends Thread {
 	 * Next to useless, but helps to mix up the execution of phases.
 	 * Must NOT be atomic.
 	 */
-	public void randomYield()
-	{
+	public void randomYield() {
 		// Generate from 5 to 40 yield()'s pseudorandomly
-		int iNumYields = (int)((new Random()).nextFloat() * 35) + 5;
+		int iNumYields = (int) ((new Random()).nextFloat() * 35) + 5;
 
-		for(int i = 0; i < iNumYields; i++)
-			yield();
+		for (int i = 0; i < iNumYields; i++) {
+			Thread.yield();
+		}
 	}
 }
-
-// EOF

@@ -24,8 +24,10 @@ run: all
 	$(JVM) $(EXE)
 
 regression: all
-	@for arg in 3 4 5; do $(JVM) $(EXE) $$arg; done
+	@for arg in 3 4 5; do echo "Running with argument: $$arg"; $(JVM) $(EXE) $$arg; done
 
+output_regression: all
+	@for arg in 3 4 5; do echo "Running with argument: $$arg"; $(JVM) $(EXE) $$arg > output_$$arg.txt; done
 clean:
 	rm -f $(CLASSES) #* *~
 

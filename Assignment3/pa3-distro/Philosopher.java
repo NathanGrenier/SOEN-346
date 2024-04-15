@@ -22,9 +22,11 @@ public class Philosopher extends BaseThread {
 	 */
 	public void eat() {
 		try {
-			// ...
+			System.out.println("Philosopher " + getTID() + " has started eating");
+			Thread.yield();
 			sleep((long) (Math.random() * TIME_TO_WASTE));
-			// ...
+			Thread.yield();
+			System.out.println("Philosopher " + getTID() + " has finished eating");
 		} catch (InterruptedException e) {
 			System.err.println("Philosopher.eat():");
 			DiningPhilosophers.reportException(e);
@@ -41,7 +43,17 @@ public class Philosopher extends BaseThread {
 	 * - The print that they are done thinking.
 	 */
 	public void think() {
-		// ...
+		try {
+			System.out.println("Philosopher " + getTID() + " has started thinking");
+			Thread.yield();
+			sleep((long) (Math.random() * TIME_TO_WASTE));
+			Thread.yield();
+			System.out.println("Philosopher " + getTID() + " has finished thinking");
+		} catch (InterruptedException e) {
+			System.err.println("Philosopher.think():");
+			DiningPhilosophers.reportException(e);
+			System.exit(1);
+		}
 	}
 
 	/**
@@ -53,20 +65,18 @@ public class Philosopher extends BaseThread {
 	 * - The print that they are done talking.
 	 */
 	public void talk() {
-		// ...
-
+		System.out.println("Philosopher " + getTID() + " has started talking");
+		Thread.yield();
 		saySomething();
-
-		// ...
+		Thread.yield();
+		System.out.println("Philosopher " + getTID() + " has finished talking");
 	}
 
 	/**
 	 * No, this is not the act of running, just the overridden Thread.run()
 	 */
-	public void run()
-	{
-		for(int i = 0; i < DiningPhilosophers.DINING_STEPS; i++)
-		{
+	public void run() {
+		for (int i = 0; i < DiningPhilosophers.DINING_STEPS; i++) {
 			DiningPhilosophers.soMonitor.pickUp(getTID());
 
 			eat();
@@ -76,20 +86,19 @@ public class Philosopher extends BaseThread {
 			think();
 
 			/*
-			 * TODO:
 			 * A decision is made at random whether this particular
 			 * philosopher is about to say something terribly useful.
 			 */
-			if(true == false)
-			{
+			if (Math.random() < 0.5) {
 				// Some monitor ops down here...
+				DiningPhilosophers.soMonitor.requestTalk();
 				talk();
-				// ...
+				DiningPhilosophers.soMonitor.endTalk();
 			}
 
-			yield();
+			Thread.yield();
 		}
-	} // run()
+	}
 
 	/**
 	 * Prints out a phrase from the array of phrases at random.
@@ -109,5 +118,3 @@ public class Philosopher extends BaseThread {
 						astrPhrases[(int) (Math.random() * astrPhrases.length)]);
 	}
 }
-
-// EOF
