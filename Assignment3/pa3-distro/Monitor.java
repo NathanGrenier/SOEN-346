@@ -40,7 +40,7 @@ public class Monitor {
 	public int[] getChopstickIndices(int piTID) {
 		int philIndex = piTID - 1;
 
-		int leftIndex = (philIndex + (chopsticks.length - 1)) % chopsticks.length;
+		int leftIndex = philIndex;
 		int rightIndex = (philIndex + 1) % chopsticks.length;
 
 		return new int[] { leftIndex, rightIndex };
